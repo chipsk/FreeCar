@@ -15,7 +15,7 @@ import (
 
 func main() {
 	// Defined by your database.
-	dsn := "root:123456@tcp(localhost:3306)/FreeCar?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:root@tcp(localhost:3306)/FreeCar?charset=utf8mb4&parseTime=True&loc=Local"
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer

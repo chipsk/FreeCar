@@ -2,15 +2,15 @@ version: "3.7"
 services:
 
   # MySQL
-  mysql:
-    image: mysql:latest
-    volumes:
-      - ./pkg/configs/sql:/docker-entrypoint-initdb.d
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_DATABASE=FreeCar
-      - MYSQL_ROOT_PASSWORD=123456
+  #  mysql:
+  #    image: mysql:latest
+  #    volumes:
+  #      - ./pkg/configs/sql:/docker-entrypoint-initdb.d
+  #    ports:
+  #      - "3306:3306"
+  #    environment:
+  #      - MYSQL_DATABASE=FreeCar
+  #      - MYSQL_ROOT_PASSWORD=123456
 
   # MongoDB
   mongo:
@@ -27,10 +27,19 @@ services:
   # Nacos
   nacos:
     image: "nacos/nacos-server:v2.1.2-slim"
+    container_name: nacos-standalone-mysql
     ports:
       - "8848:8848"
     environment:
+      - TZ=Asia/Shanghai
       - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=172.16.38.121
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=root
+      - MYSQL_SERVICE_DB_NAME=nacos_config
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=10000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
       - JVM_XMS=512m
       - JVM_XMX=512m
       - JVM_XMN=256m
